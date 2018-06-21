@@ -134,7 +134,7 @@ export default class  Home extends Component {
                         Vegetable{'\u00A0'}
                     </span>{'\u00A0'}{'\u00A0'}
                     <span className="label label-warning">
-                        <input type="checkbox" className="form-check-input" defaultChecked={!this.state.chkbox}onChange={updateFilter.bind(this, 'FRUIT')}></input>{'\u00A0'}
+                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox}onChange={updateFilter.bind(this, 'FRUIT')}></input>{'\u00A0'}
                         Fruit{'\u00A0'}
                     </span>{'\u00A0'}{'\u00A0'}
 
