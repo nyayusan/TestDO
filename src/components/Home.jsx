@@ -7,6 +7,7 @@ function renderCheckboxes() {
     const {filter} = this.state;
     const chkbox = this.state.chkbox;
 
+
     const boxbrands = [
         {
             title: 'Apple',
@@ -59,34 +60,33 @@ function renderCheckboxes() {
 
     ]
 
-    this.state = { boxbrands };
-
-    if (!chkbox){
-        this.state.chkbox = true;
-        return boxbrands
-            .filter(boxbrand =>
-                filter === 'ALL' ||
-                filter === 'MEAT' && (boxbrand.flag != '3') ||
-                filter === 'VEGETABLE' && (boxbrand.flag != '2') ||
-                filter === 'FRUIT' && (boxbrand.kind != '1')
-            )
-            .map((boxbrand, index) =>
-                <BoxMenu
-                    titleBox={boxbrand.title}
-                    kindBox={boxbrand.kind}
-                    descBox={boxbrand.descr}
-                />
-            );
-    }
-
+    this.state = {boxbrands};
+    console.log(chkbox)
     if (chkbox) {
-        this.state.chkbox = false;
+        this.chkbox = false
         return boxbrands
             .filter(boxbrand =>
                 filter === 'ALL' ||
                 filter === 'MEAT' && (boxbrand.flag === '3') ||
                 filter === 'VEGETABLE' && (boxbrand.flag === '2') ||
-                filter === 'FRUIT' && (boxbrand.kind === '1')
+                filter === 'FRUIT' && (boxbrand.flag === '1')
+            )
+            .map((boxbrand, index) =>
+                <BoxMenu
+                    titleBox={boxbrand.title}
+                    kindBox={boxbrand.kind}
+                    descBox={boxbrand.descr}
+                />
+            );
+
+    } else {
+        this.chkbox = true
+        return boxbrands
+            .filter(boxbrand =>
+                filter === 'ALL' ||
+                filter === 'MEAT' && (boxbrand.flag != '3') ||
+                filter === 'VEGETABLE' && (boxbrand.flag != '2') ||
+                filter === 'FRUIT' && (boxbrand.flag != '1')
             )
             .map((boxbrand, index) =>
                 <BoxMenu
@@ -96,7 +96,7 @@ function renderCheckboxes() {
                 />
             );
     }
-
+    
 }
 
 function updateFilter(filter) {
@@ -130,11 +130,11 @@ export default class  Home extends Component {
                         Meat{'\u00A0'}
                     </span>{'\u00A0'}{'\u00A0'}
                     <span className="label label-success">
-                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox}onChange={updateFilter.bind(this, 'VEGETABLE')}></input>{'\u00A0'}
+                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox} onChange={updateFilter.bind(this, 'VEGETABLE')}></input>{'\u00A0'}
                         Vegetable{'\u00A0'}
                     </span>{'\u00A0'}{'\u00A0'}
                     <span className="label label-warning">
-                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox}onChange={updateFilter.bind(this, 'FRUIT')}></input>{'\u00A0'}
+                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox} onChange={updateFilter.bind(this, 'FRUIT')}></input>{'\u00A0'}
                         Fruit{'\u00A0'}
                     </span>{'\u00A0'}{'\u00A0'}
 
