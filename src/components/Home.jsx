@@ -1,18 +1,21 @@
 import  React, { Component } from 'react';
 import { Grid, Row} from 'react-bootstrap';
+import { Checkbox } from 'antd';
 import './Home.css';
 import BoxMenu from './BoxMenu';
 
-function renderCheckboxes() {
-    const {filter} = this.state;
-    const chkbox = this.state.chkbox;
 
+function filterBox() {
+    const checkState = this.state.checked;
+    const val1 = checkState.indexOf("1");
+    const val2 = checkState.indexOf("2");
+    const val3 = checkState.indexOf("3");
 
     const boxbrands = [
         {
             title: 'Apple',
             kind: 'Fruit',
-            flag: '1',
+            flag: '3',
             descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
         },
         {
@@ -24,7 +27,7 @@ function renderCheckboxes() {
         {
             title: 'Banana',
             kind: 'Fruit',
-            flag: '1',
+            flag: '3',
             descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
         },
         {
@@ -36,19 +39,19 @@ function renderCheckboxes() {
         {
             title: 'Chicken',
             kind: 'Meat',
-            flag: '3',
+            flag: '1',
             descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
         },
         {
             title: 'Orange',
             kind: 'Fruit',
-            flag: '1',
+            flag: '3',
             descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
         },
         {
             title: 'Beef',
             kind: 'Meat',
-            flag: '3',
+            flag: '1',
             descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
         },
         {
@@ -60,94 +63,59 @@ function renderCheckboxes() {
 
     ]
 
-    this.state = {boxbrands};
-    console.log(chkbox)
-    if (chkbox) {
-        this.chkbox = false
-        return boxbrands
-            .filter(boxbrand =>
-                filter === 'ALL' ||
-                filter === 'MEAT' && (boxbrand.flag === '3') ||
-                filter === 'VEGETABLE' && (boxbrand.flag === '2') ||
-                filter === 'FRUIT' && (boxbrand.flag === '1')
-            )
-            .map((boxbrand, index) =>
-                <BoxMenu
-                    titleBox={boxbrand.title}
-                    kindBox={boxbrand.kind}
-                    descBox={boxbrand.descr}
-                />
-            );
 
-    } else {
-        this.chkbox = true
-        return boxbrands
-            .filter(boxbrand =>
-                filter === 'ALL' ||
-                filter === 'MEAT' && (boxbrand.flag != '3') ||
-                filter === 'VEGETABLE' && (boxbrand.flag != '2') ||
-                filter === 'FRUIT' && (boxbrand.flag != '1')
-            )
-            .map((boxbrand, index) =>
-                <BoxMenu
-                    titleBox={boxbrand.title}
-                    kindBox={boxbrand.kind}
-                    descBox={boxbrand.descr}
-                />
-            );
-    }
-    
+    return boxbrands
+        .filter(boxbrand =>
+            (val1 != -1 && (boxbrand.flag === '1')) ||
+            (val2 != -1 && (boxbrand.flag === '2')) ||
+            (val3 != -1 && (boxbrand.flag === '3'))
+        )
+        .map((boxbrand, index) =>
+             <BoxMenu
+                 titleBox={boxbrand.title}
+                 kindBox={boxbrand.kind}
+                 descBox={boxbrand.descr}
+             />
+        );
+
+
 }
 
-function updateFilter(filter) {
-    this.setState({
-        filter
-    });
-}
-
-export default class  Home extends Component {
+export default class Home extends Component {
     constructor(props) {
-        super(props);
-
-
+        super(props)
         this.state = {
-            boxbrands: [],
-            filter: 'ALL',
-            chkbox: true
+            checked: [],
         };
-    }
 
+    }
 
 
     render() {
+        const CheckboxGroup = Checkbox.Group;
 
         return (
             <div>
-                <Grid id="filters">
-                    <span>Filter :</span> {'\u00A0'}{'\u00A0'}
-                    <span className="label label-danger">
-                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox} onChange={updateFilter.bind(this, 'MEAT')}></input>{'\u00A0'}
-                        Meat{'\u00A0'}
-                    </span>{'\u00A0'}{'\u00A0'}
-                    <span className="label label-success">
-                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox} onChange={updateFilter.bind(this, 'VEGETABLE')}></input>{'\u00A0'}
-                        Vegetable{'\u00A0'}
-                    </span>{'\u00A0'}{'\u00A0'}
-                    <span className="label label-warning">
-                        <input type="checkbox" className="form-check-input" defaultChecked={this.state.chkbox} onChange={updateFilter.bind(this, 'FRUIT')}></input>{'\u00A0'}
-                        Fruit{'\u00A0'}
-                    </span>{'\u00A0'}{'\u00A0'}
-
+                <Grid>
+                    <CheckboxGroup onChange={value => this.setState({checked: value})}>
+                        <span>Filter :</span> {'\u00A0'}{'\u00A0'}
+                        <span className="label label-danger">
+                           <Checkbox value='1'>Meat</Checkbox>
+                        </span>{'\u00A0'}{'\u00A0'}
+                        <span className="label label-success">
+                           <Checkbox value='2'>Vegetable</Checkbox>
+                        </span>{'\u00A0'}{'\u00A0'}
+                        <span className="label label-warning">
+                           <Checkbox value='3'>Fruit</Checkbox>
+                        </span>{'\u00A0'}{'\u00A0'}
+                    </CheckboxGroup>
                     <br/>
                     <br/>
-
                     <Row className="show-grid row-flex">
-                        {renderCheckboxes.call(this)}
+                        {filterBox.call(this)}
                     </Row>
-
                 </Grid>
             </div>
-        )
+        );
     }
 }
-
