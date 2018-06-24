@@ -85,7 +85,7 @@ export default class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            checked: [],
+            checked: ["1", "2", "3"],
         };
 
     }
@@ -97,7 +97,7 @@ export default class Home extends Component {
         return (
             <div>
                 <Grid>
-                    <CheckboxGroup onChange={value => this.setState({checked: value})}>
+                    <CheckboxGroup onChange={value => this.setState({checked: value})} value={this.state.checked}>
                         <span>Filter :</span> {'\u00A0'}{'\u00A0'}
                         <span className="label label-danger">
                            <Checkbox value='1'>Meat</Checkbox>
